@@ -1,7 +1,14 @@
 # Users
 
 ## Get All Users
-You can GET all users in /api/v1/users. Authentication `token` is passed through `Authorization` header and is **required**. 
+You can GET all users in `/api/v1/users`. Authentication `token` is passed through `Authorization` header and is **required**.
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+`page[number]` | The `number`<sup>th</sup> page of the response
+`page[size]`   | The `size` of the `per_page` response     
 
 ### Possible exceptions
 
@@ -24,53 +31,93 @@ HTTP/1.1 200 OK
 {
     "data": [
         {
-            "id": "4",
+            "id": "1",
             "type": "users",
             "attributes": {
-                "name": "Nitish Aggarwal"
+                "name": "Test User 1"
             }
         },
         {
             "id": "2",
             "type": "users",
             "attributes": {
-                "name": "Nitish Aggarwal"
+                "name": "Test User 2"
             }
         },
         {
             "id": "3",
             "type": "users",
             "attributes": {
-                "name": "Nitish Aggarwal"
+                "name": "Test User 3"
+            }
+        },
+        {
+            "id": "4",
+            "type": "users",
+            "attributes": {
+                "name": "Test User 4"
             }
         },
         {
             "id": "5",
             "type": "users",
             "attributes": {
-                "name": "Abhishek"
-            }
-        },
-        {
-            "id": "7",
-            "type": "users",
-            "attributes": {
-                "name": null
+                "name": "Test User 5"
             }
         }
     ],
-    "meta": {
-        "current_page": 1,
-        "next_page": 2,
-        "prev_page": null,
-        "total_pages": 4,
-        "total_count": 17
+    "links": {
+        "self": "http://localhost:3000/api/v1/users?page[number]=1",
+        "first": "http://localhost:3000/api/v1/users?page[number]=1",
+        "prev": null,
+        "next": "http://localhost:3000/api/v1/users?page[number]=2",
+        "last": "http://localhost:3000/api/v1/users?page[number]=4"
+    }
+}
+```
+
+## GET logged in User
+You can GET the logged in user details in `/api/v1/me`. Authentication `token` is passed through `Authorization` header and is **required**.
+
+### Possible exceptions
+
+| Error Code | Description|
+| ---------- |------------------------------------------------------|
+| 401        | When user is not authenticated i.e invalid or corrupt `token`.|
+
+```http
+GET /api/v1/users/1 HTTP/1.1
+Accept: application/json
+Authorization: Token {token}
+Host: localhost
+```
+```http
+HTTP/1.1 200 OK
+```
+> JSON response example:
+
+```json
+{
+    "data": {
+        "id": "1",
+        "type": "user",
+        "attributes": {
+            "id": 1,
+            "email": "test@test1.com",
+            "name": "Test User 1",
+            "admin": false,
+            "country": null,
+            "educational_institute": null,
+            "subscribed": true,
+            "created_at": "2020-03-22T12:41:28.931Z",
+            "updated_at": "2020-03-22T12:41:29.803Z"
+        }
     }
 }
 ```
 
 ## GET a Specific User
-You can GET particular user details in /api/v1/users/{:id}. Authentication `token` is passed through `Authorization` header and is **required**. 
+You can GET particular user details in `/api/v1/users/{:id}`. Authentication `token` is passed through `Authorization` header and is **required**. 
 
 ### URL Parameters
 
@@ -115,9 +162,10 @@ HTTP/1.1 200 OK
     }
 }
 ```
+<aside class="notice">email is serialized only if you are authorized as user associated with {:id}</aside>
 
 ## UPDATE a Specific User
-You can UPDATE a specific user details in /api/v1/users/{:id}. Authentication `token` is passed through `Authorization` header and is **required**.
+You can UPDATE a specific user details in `/api/v1/users/{:id}`. Authentication `token` is passed through `Authorization` header and is **required**.
 
 ### URL Parameters
 

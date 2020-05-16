@@ -2,6 +2,8 @@
 
 Welcome to the CircuitVerse API! You can use our API to access CircuitVerse API endpoints, which can get information on various public projects, user projects, groups you mentor, pending assignments and a whole bunch of stuff.
 
+<aside class="success">The CircuitVerse API uses json:api specs</aside>
+
 ## Client Errors
 
 ```http
@@ -97,6 +99,7 @@ HTTP/1.1 500 Internal Server Error
 | 503        | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.|
 
 ## Authorization
+CircuitVerse API uses `RSASSA` cryptographic signing that requires `private` and associated `public` key
 
 ```http
 GET /api/v1/users/1 HTTP/1.1
@@ -110,15 +113,15 @@ You can authenticate in the API by providing the user's `token` in the `Authoriz
 ## Pagination
 
 ```http
-GET /api/v1/resource?page=2 HTTP/1.1
+GET /api/v1/resource?page[number]=2 HTTP/1.1
 Accept: application/json
 Host: localhost
 ```
 
 Requests that return multiple items will be paginated to 5 items by default.
-You can specify further pages with the `?page` parameter. For some resources, you can also set a custom page size with the `?per_page` parameter.
+You can specify further pages with the `?page[number]` parameter. For some resources, you can also set a custom page size with the `?page[size]` parameter.
 
-## Meta Data
+## Links
 
 ```http
 GET /api/v1/resources HTTP/1.1
@@ -133,18 +136,18 @@ HTTP/1.1 200 OK
 {
   "resources": [
   ],
-  "meta":{
-    "current_page":1,
-    "next_page":2,
-    "prev_page":null,
-    "total_pages":2,
-    "total_count":8
+  "links": {
+    "self": "http://localhost:3000/api/v1/resource?page[number]=1",
+    "first": "http://localhost:3000/api/v1/resource?page[number]=1",
+    "prev": null,
+    "next": "http://localhost:3000/api/v1/resource?page[number]=2",
+    "last": "http://localhost:3000/api/v1/resource?page[number]=4"
   }
 }
 ```
 
-In each GET request that acts upon resources, there is an extra field in the response under "meta" root element.
-It includes, the current requested page, next page, previous page, total pages and the total number of resources under the given params.
+In each GET request that acts upon resources, there is an extra field in the response under "links" root element.
+It includes, the links to current requested page, next page, previous page, first page and the last page for resources under the given params.
 
 ## Cross Origin Resource Sharing 
 The API supports Cross Origin Resource Sharing (CORS) for requests from any origin.
