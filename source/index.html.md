@@ -8,9 +8,6 @@ includes:
   - overview
   - authentication
   - users
-  - public_projects
-  - user_projects
-  - featured_circuits
-
+  - projects
 ---
 

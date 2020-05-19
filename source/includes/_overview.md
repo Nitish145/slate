@@ -33,7 +33,7 @@ HTTP/1.1 422 Unprocessable Entity
       "status": 422,
       "title": "resource invalid!",
       "detail": "resource invalid!"
-    },
+    }
   ]
 }
 ```
@@ -86,19 +86,20 @@ HTTP/1.1 500 Internal Server Error
 }
 ```
 
-| Error Code | Meaning|
-| ---------- |------------------------------------------------------|
-| 400        | Bad Request -- Your request is invalid.|
-| 401        | Unauthorized -- Your Authentication token is wrong.|
-| 403        | Forbidden -- The resource requested is hidden for requested user only.|
-| 404        | Not Found -- The resource requested could not be found.|
-| 405        | Method Not Allowed -- You tried to access a resource with an invalid method.|
-| 409        | Conflict -- The request could not be processed due to a conflict.|
-| 429        | Too Many Requests -- You're requesting too many resources! Slow down!|
-| 500        | Internal Server Error -- We had a problem with our server. Try again later.|
-| 503        | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.|
+| Error Code | Meaning                                                                                   |
+| ---------- | ----------------------------------------------------------------------------------------- |
+| 400        | Bad Request -- Your request is invalid.                                                   |
+| 401        | Unauthorized -- Your Authentication token is wrong.                                       |
+| 403        | Forbidden -- The resource requested is hidden for requested user only.                    |
+| 404        | Not Found -- The resource requested could not be found.                                   |
+| 405        | Method Not Allowed -- You tried to access a resource with an invalid method.              |
+| 409        | Conflict -- The request could not be processed due to a conflict.                         |
+| 429        | Too Many Requests -- You're requesting too many resources! Slow down!                     |
+| 500        | Internal Server Error -- We had a problem with our server. Try again later.               |
+| 503        | Service Unavailable -- We're temporarily offline for maintenance. Please try again later. |
 
 ## Authorization
+
 CircuitVerse API uses `RSASSA` cryptographic signing that requires `private` and associated `public` key
 
 ```http
@@ -132,10 +133,10 @@ Host: localhost
 ```http
 HTTP/1.1 200 OK
 ```
+
 ```json
 {
-  "resources": [
-  ],
+  "resources": [],
   "links": {
     "self": "http://localhost:3000/api/v1/resource?page[number]=1",
     "first": "http://localhost:3000/api/v1/resource?page[number]=1",
@@ -149,5 +150,6 @@ HTTP/1.1 200 OK
 In each GET request that acts upon resources, there is an extra field in the response under "links" root element.
 It includes, the links to current requested page, next page, previous page, first page and the last page for resources under the given params.
 
-## Cross Origin Resource Sharing 
+## Cross Origin Resource Sharing
+
 The API supports Cross Origin Resource Sharing (CORS) for requests from any origin.
