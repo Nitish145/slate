@@ -266,25 +266,25 @@
             <a href="#projects" class="toc-h1 toc-link" data-title="Projects">Projects</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-projects" class="toc-h2 toc-link" data-title="Get All Projects">Get All Projects</a>
+                    <a href="#get-all-projects" class="toc-h2 toc-link" data-title="GET All Projects">GET All Projects</a>
                   </li>
                   <li>
-                    <a href="#get-user-specific-projects" class="toc-h2 toc-link" data-title="Get User Specific Projects">Get User Specific Projects</a>
+                    <a href="#get-user-specific-projects" class="toc-h2 toc-link" data-title="GET User Specific Projects">GET User Specific Projects</a>
                   </li>
                   <li>
-                    <a href="#get-specific-project-details" class="toc-h2 toc-link" data-title="GET Specific Project Details">GET Specific Project Details</a>
+                    <a href="#get-project-details" class="toc-h2 toc-link" data-title="GET Project Details">GET Project Details</a>
                   </li>
                   <li>
-                    <a href="#put-patch-specific-project-details" class="toc-h2 toc-link" data-title="PUT/PATCH Specific Project Details">PUT/PATCH Specific Project Details</a>
+                    <a href="#update-project" class="toc-h2 toc-link" data-title="UPDATE Project">UPDATE Project</a>
                   </li>
                   <li>
-                    <a href="#delete-specific-project" class="toc-h2 toc-link" data-title="DELETE Specific Project">DELETE Specific Project</a>
+                    <a href="#delete-project" class="toc-h2 toc-link" data-title="DELETE Project">DELETE Project</a>
                   </li>
                   <li>
-                    <a href="#get-featured-projects" class="toc-h2 toc-link" data-title="Get Featured Projects">Get Featured Projects</a>
+                    <a href="#get-featured-projects" class="toc-h2 toc-link" data-title="GET Featured Projects">GET Featured Projects</a>
                   </li>
                   <li>
-                    <a href="#star-unstar-a-project" class="toc-h2 toc-link" data-title="Star/Unstar a Project">Star/Unstar a Project</a>
+                    <a href="#star-unstar-a-project" class="toc-h2 toc-link" data-title="STAR/UNSTAR a Project">STAR/UNSTAR a Project</a>
                   </li>
                   <li>
                     <a href="#fork-a-project" class="toc-h2 toc-link" data-title="FORK a Project">FORK a Project</a>
@@ -744,7 +744,7 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='projects'>Projects</h1><h2 id='get-all-projects'>Get All Projects</h2>
+</span></code></pre><h1 id='projects'>Projects</h1><h2 id='get-all-projects'>GET All Projects</h2>
 <p>You can GET all projects in <code>/api/v1/projects</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>optional</strong>.</p>
 
 <p>This endpoint fetches all the <code>public projects</code> if the user is <em>not authorized</em>. If <em>authorized</em> it fetches all the projects user has access to including <code>private projects</code>.</p>
@@ -957,7 +957,7 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/projects?page[number]=4"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='get-user-specific-projects'>Get User Specific Projects</h2>
+</span></code></pre><h2 id='get-user-specific-projects'>GET User Specific Projects</h2>
 <p>You can GET all users specific (identified by <code>:id</code>) projects in <code>/api/v1/users/:id/projects</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 
 <p>This endpoint fetches user specific <code>public projects</code> if the user is <em>not authorized</em> as the user identified by <code>:id</code>. If <em>authorized</em> as the user identified by <code>:id</code> it fetches all the user specific projects including <code>private projects</code>.</p>
@@ -1206,7 +1206,7 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/users/1/projects?page[number]=3"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='get-specific-project-details'>GET Specific Project Details</h2>
+</span></code></pre><h2 id='get-project-details'>GET Project Details</h2>
 <p>You can GET project details (identified by <code>:id</code>) in <code>/api/v1/projects/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
@@ -1305,8 +1305,8 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='put-patch-specific-project-details'>PUT/PATCH Specific Project Details</h2>
-<p>You can PUT/PATCH project details (identified by <code>:id</code>) in <code>/api/v1/projects/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+</span></code></pre><h2 id='update-project'>UPDATE Project</h2>
+<p>You can UPDATE project details (identified by <code>:id</code>) in <code>/api/v1/projects/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='list-of-acceptable-params-for-put-patch-requests-include'>List of acceptable params for put/patch requests include:</h3>
 <table><thead>
 <tr>
@@ -1444,7 +1444,7 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='delete-specific-project'>DELETE Specific Project</h2>
+</span></code></pre><h2 id='delete-project'>DELETE Project</h2>
 <p>You can DELETE project (identified by <code>:id</code>) in <code>/api/v1/projects/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='url-parameters-4'>URL Parameters</h3>
 <table><thead>
@@ -1486,7 +1486,7 @@ It includes, the links to current requested page, next page, previous page, firs
 <span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
 </code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
 <span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
-</code></pre><h2 id='get-featured-projects'>Get Featured Projects</h2>
+</code></pre><h2 id='get-featured-projects'>GET Featured Projects</h2>
 <p>You can GET all featured projects in <code>/api/v1/projects/featured</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='url-query-parameters-3'>URL Query Parameters</h3>
 <table><thead>
@@ -1600,7 +1600,7 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/projects/featured?page[number]=1"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='star-unstar-a-project'>Star/Unstar a Project</h2>
+</span></code></pre><h2 id='star-unstar-a-project'>STAR/UNSTAR a Project</h2>
 <p>You can star or unstar a project in <code>/api/v1/projects/:id/toggle-star</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='url-parameters-5'>URL Parameters</h3>
 <table><thead>
