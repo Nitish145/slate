@@ -311,6 +311,20 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#group-members" class="toc-h1 toc-link" data-title="Group Members">Group Members</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-group-members" class="toc-h2 toc-link" data-title="GET All group members">GET All group members</a>
+                  </li>
+                  <li>
+                    <a href="#create-add-group-member" class="toc-h2 toc-link" data-title="CREATE/ADD Group Member">CREATE/ADD Group Member</a>
+                  </li>
+                  <li>
+                    <a href="#delete-group-member" class="toc-h2 toc-link" data-title="DELETE Group Member">DELETE Group Member</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
     </div>
     <div class="page-wrapper">
@@ -2313,6 +2327,167 @@ It includes, the links to current requested page, next page, previous page, firs
 </tr>
 </tbody></table>
 <pre class="highlight http tab-http"><code><span class="nf">DELETE</span> <span class="nn">/api/v1/groups/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre><h1 id='group-members'>Group Members</h1><h2 id='get-all-group-members'>GET All group members</h2>
+<p>You can GET all group members for a particular group in <code>/api/v1/groups/:group_id/group_members</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-query-parameters'>URL Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>page[number]</code></td>
+<td>The <code>number</code><sup>th</sup> page of the response</td>
+</tr>
+<tr>
+<td><code>page[size]</code></td>
+<td>The <code>size</code> of the <code>per_page</code> response</td>
+</tr>
+</tbody></table>
+<h3 id='possible-exceptions'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user tries to authenticate with invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When group has no groups members associated with it.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/groups/:group_id/group_members</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"group_member"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"group_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-25T18:15:52.890Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-02-25T18:15:52.890Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test User 1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@test.com"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/group_members?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/group_members?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/group_members?page[number]=1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='create-add-group-member'>CREATE/ADD Group Member</h2>
+<p>You can add members to your group in <code>/api/v1/groups/:group_id/group_members</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>group_id</code></td>
+<td>The <code>id</code> of the group, members are to be fetched</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">emails in POST request is comma separated string of emails</aside>
+<h3 id='possible-exceptions-2'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to add members to the group</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested group identified by <code>group_id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/api/v1/groups/:group_id/group_members</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"emails"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newuser@test.com, alreadyexists@test.com, NA"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"added"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"alreadyexists@test.com"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"pending"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"newuser@test.com"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"invalid"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"NA"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='delete-group-member'>DELETE Group Member</h2>
+<p>Group mentor can DELETE a group member (identified by <code>:id</code>) in <code>/api/v1/group_members/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the group member to be deleted</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">User with mentor or admin access can only delete the group member</aside>
+<h3 id='possible-exceptions-3'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to delete the group member</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested group member identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">DELETE</span> <span class="nn">/api/v1/group_members/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 <span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
 <span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
 <span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
