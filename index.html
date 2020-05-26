@@ -325,6 +325,32 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#assignments" class="toc-h1 toc-link" data-title="Assignments">Assignments</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-group-39-s-assignments" class="toc-h2 toc-link" data-title="GET Group's Assignments">GET Group's Assignments</a>
+                  </li>
+                  <li>
+                    <a href="#get-assignment-details" class="toc-h2 toc-link" data-title="GET Assignment details">GET Assignment details</a>
+                  </li>
+                  <li>
+                    <a href="#post-assignment" class="toc-h2 toc-link" data-title="POST Assignment">POST Assignment</a>
+                  </li>
+                  <li>
+                    <a href="#update-assignment" class="toc-h2 toc-link" data-title="UPDATE Assignment">UPDATE Assignment</a>
+                  </li>
+                  <li>
+                    <a href="#delete-assignment" class="toc-h2 toc-link" data-title="DELETE Assignment">DELETE Assignment</a>
+                  </li>
+                  <li>
+                    <a href="#reopen-assignment" class="toc-h2 toc-link" data-title="REOPEN Assignment">REOPEN Assignment</a>
+                  </li>
+                  <li>
+                    <a href="#start-assignment" class="toc-h2 toc-link" data-title="START Assignment">START Assignment</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
     </div>
     <div class="page-wrapper">
@@ -2493,7 +2519,507 @@ It includes, the links to current requested page, next page, previous page, firs
 <span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
 </code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
 <span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre><h1 id='assignments'>Assignments</h1><h2 id='get-group-39-s-assignments'>GET Group&#39;s Assignments</h2>
+<p>You can GET all the assignments for the group you have access to in <code>/api/v1/groups/:group_id/assignments</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-query-parameters'>URL Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>page[number]</code></td>
+<td>The <code>number</code><sup>th</sup> page of the response</td>
+</tr>
+<tr>
+<td><code>page[size]</code></td>
+<td>The <code>size</code> of the <code>per_page</code> response</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">Only users with show access can fetch the assignments</aside>
+<h3 id='possible-exceptions'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user tries to authenticate with invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When user without show access tries to fetch assignments</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the group identified by :group_id does not exist</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/groups/:group_id/assignments</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 </code></pre>
+<blockquote>
+<p>JSON response example :</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test assignment 1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-05-24T11:47:40.244Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment description"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:47:40.244Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:47:40.244Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no_scale"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"grades_finalized"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test assignment 2"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-05-24T11:48:26.739Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment description"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:48:26.740Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:48:26.740Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no_scale"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"grades_finalized"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/assignments?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/assignments?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/groups/1/assignments?page[number]=1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='get-assignment-details'>GET Assignment details</h2>
+<p>You can GET assignment details (identified by <code>:id</code>) in <code>/api/v1/assignments/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the assignment to be detailed</td>
+</tr>
+</tbody></table>
+<h3 id='possible-exceptions-2'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When authenticated user is neither mentor nor user of the Group</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested assignment identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/assignments/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test assignment 1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-05-24T11:48:26.739Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment description"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:48:26.740Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-24T11:48:26.740Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no_scale"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grades_finalized"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='post-assignment'>POST Assignment</h2>
+<p>You can POST assignment in <code>/api/v1/groups/:group_id/assignments</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='list-of-acceptable-params-for-post-request-include'>List of acceptable params for post request include:</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>String</code></td>
+<td>Name of the Assignment</td>
+</tr>
+<tr>
+<td><code>deadline</code></td>
+<td><code>String</code></td>
+<td>Updated name of the group</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>String</code></td>
+<td>Description of the assignment</td>
+</tr>
+<tr>
+<td><code>grading_scale</code></td>
+<td><code>String</code></td>
+<td>grading scale for the assignment</td>
+</tr>
+<tr>
+<td><code>restrictions</code></td>
+<td><code>JSON String</code></td>
+<td>restrictions for assignments in json string</td>
+</tr>
+</tbody></table>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>group_id</code></td>
+<td>The <code>id</code> of the group, assignment is to be added</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">The grading_scale cannot be changed later on</aside>
+<h3 id='possible-exceptions-3'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>When invalid parameters are used.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to add the assignment</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested group identified by <code>group_id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/api/v1/groups/:group_id/assignments</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test assignment"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date_time_string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test description"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Letter"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">ACCEPTED</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Assignment"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test description"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Letter"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grades_finalized"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='update-assignment'>UPDATE Assignment</h2>
+<p>You can PATCH assignment details in <code>/api/v1/assignments/:id</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='list-of-acceptable-params-for-put-patch-request-include'>List of acceptable params for put/patch request include:</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>String</code></td>
+<td>Name of the Assignment</td>
+</tr>
+<tr>
+<td><code>deadline</code></td>
+<td><code>String</code></td>
+<td>Updated name of the group</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>String</code></td>
+<td>Description of the assignment</td>
+</tr>
+<tr>
+<td><code>restrictions</code></td>
+<td><code>JSON String</code></td>
+<td>restrictions for assignments in json string</td>
+</tr>
+</tbody></table>
+<h3 id='url-parameters-3'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the assignment to be updated</td>
+</tr>
+</tbody></table>
+<h3 id='possible-exceptions-4'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>When invalid parameters are used.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to update the assignment</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested assignment identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">PATCH</span> <span class="nn">/api/v1/assignments/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test assignment Updated"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date_time_string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test description"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">ACCEPTED</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assignment"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Assignment Updated"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deadline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test description"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-26T05:25:30.049Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grading_scale"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Letter"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"grades_finalized"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restrictions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[]"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='delete-assignment'>DELETE Assignment</h2>
+<p>Group mentor can DELETE a assignment (identified by <code>:id</code>) in <code>/api/v1/assignments/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-4'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the assignment to be deleted</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">User with mentor or admin access can only delete the assignment</aside>
+<h3 id='possible-exceptions-5'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to delete the assignment</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested assignment identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">DELETE</span> <span class="nn">/api/v1/assignment/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre><h2 id='reopen-assignment'>REOPEN Assignment</h2>
+<p>Mentor can REOPEN a closed assignment to extend the deadline by 1 day in <code>/api/v1/assignments/:id/reopen</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-5'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the assignment to be reopened</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Reopened assignment's deadline is increased by one day</aside>
+<h3 id='possible-exceptions-6'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When authenticated user is neither mentor nor user of the Group</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested assignment identified by <code>id</code> does not exists.</td>
+</tr>
+<tr>
+<td>409</td>
+<td>When the requested assignment identified by <code>id</code> is already opened.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/assignments/:id/reopen</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Assignment has been reopened!"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='start-assignment'>START Assignment</h2>
+<p>Group Members can start working on the assignment in<code>/api/v1/assignments/:id/start</code>. This creates a new private project for he user to work upon. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-6'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the assignment to be start working on</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">Created Private Project's name is #{username}/#{assignment_name}</aside>
+<h3 id='possible-exceptions-7'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When authenticated user isn&#39;t a user of the Group, assignment is part of</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested assignment identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/assignments/:id/start</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Voila! Project set up under name #{@project.name}"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
