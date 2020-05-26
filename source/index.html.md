@@ -9,5 +9,7 @@ includes:
   - authentication
   - users
   - projects
+  - groups
+  - group_members
+  - assignments
 ---
-
