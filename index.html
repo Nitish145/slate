@@ -292,6 +292,20 @@
               </ul>
           </li>
           <li>
+            <a href="#collaborators" class="toc-h1 toc-link" data-title="Collaborators">Collaborators</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-project-collaborators" class="toc-h2 toc-link" data-title="GET All project collaborators">GET All project collaborators</a>
+                  </li>
+                  <li>
+                    <a href="#create-add-collaborator" class="toc-h2 toc-link" data-title="CREATE/ADD Collaborator">CREATE/ADD Collaborator</a>
+                  </li>
+                  <li>
+                    <a href="#delete-collaborator" class="toc-h2 toc-link" data-title="DELETE Collaborator">DELETE Collaborator</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#groups" class="toc-h1 toc-link" data-title="Groups">Groups</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1798,7 +1812,169 @@ It includes, the links to current requested page, next page, previous page, firs
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='groups'>Groups</h1><h2 id='get-all-your-groups'>GET All your groups</h2>
+</span></code></pre><h1 id='collaborators'>Collaborators</h1><h2 id='get-all-project-collaborators'>GET All project collaborators</h2>
+<p>You can GET all collaborators for a particular project in <code>/api/v1/projects/:project_id/collaborators</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-query-parameters'>URL Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>page[number]</code></td>
+<td>The <code>number</code><sup>th</sup> page of the response</td>
+</tr>
+<tr>
+<td><code>page[size]</code></td>
+<td>The <code>size</code> of the <code>per_page</code> response</td>
+</tr>
+</tbody></table>
+<h3 id='possible-exceptions'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user tries to authenticate with invalid or corrupt <code>token</code>.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">GET</span> <span class="nn">/api/v1/projects/:project_id/collaborators</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Collaborator's Name"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"self"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/projects/1/collaborators?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/projects/1/collaborators?page[number]=1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prev"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000/api/v1/projects/1/collaborators?page[number]=1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='create-add-collaborator'>CREATE/ADD Collaborator</h2>
+<p>Project author can add collaborators to his/her project in <code>/api/v1/projects/:project_id/collaborators</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>project_id</code></td>
+<td>The <code>id</code> of the project, collaborators are to be added</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">emails in POST request is comma separated string of emails</aside>
+
+<aside class="warning">You cannot add yourself as a collaborator</aside>
+<h3 id='possible-exceptions-2'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-author user tries to add collaborators to the project</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested project identified by <code>project_id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/api/v1/projects/:project_id/collaborators</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"emails"</span><span class="p">:</span><span class="w"> </span><span class="s2">"newuser@test.com, alreadyCollaborating@test.com, NA"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"added"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"newuser@test.com"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"existing"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"alreadyCollaborating@test.com"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"invalid"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"NA"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='delete-collaborator'>DELETE Collaborator</h2>
+<p>Project author can DELETE a collaborator (identified by <code>:id</code>) in <code>/api/v1/projects/:project_id/collaborators/:id</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>project_id</code></td>
+<td>The <code>id</code> of the project, collaborators are to be deleted of</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the collaborating member</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">User with author access can only delete a collaborator</aside>
+<h3 id='possible-exceptions-3'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-author user tries to delete the collaborator</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested project identified by <code>project_id</code> does not exists.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested collaborator identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">DELETE</span> <span class="nn">/api/v1/projects/:project_id/collaborators/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre><h1 id='groups'>Groups</h1><h2 id='get-all-your-groups'>GET All your groups</h2>
 <p>You can GET all groups you are a member of in <code>/api/v1/groups</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
 <h3 id='url-query-parameters'>URL Query Parameters</h3>
 <table><thead>
