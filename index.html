@@ -365,6 +365,20 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#grades" class="toc-h1 toc-link" data-title="Grades">Grades</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-add-grade" class="toc-h2 toc-link" data-title="CREATE/ADD Grade">CREATE/ADD Grade</a>
+                  </li>
+                  <li>
+                    <a href="#update-grade" class="toc-h2 toc-link" data-title="UPDATE Grade">UPDATE Grade</a>
+                  </li>
+                  <li>
+                    <a href="#delete-grade" class="toc-h2 toc-link" data-title="DELETE Grade">DELETE Grade</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
     </div>
     <div class="page-wrapper">
@@ -3195,7 +3209,187 @@ It includes, the links to current requested page, next page, previous page, firs
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Voila! Project set up under name #{@project.name}"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre><h1 id='grades'>Grades</h1><h2 id='create-add-grade'>CREATE/ADD Grade</h2>
+<p>You can grade an assignment in <code>/api/v1/assignments/:assignment_id/projects/:project_id/grades</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>assignment_id</code></td>
+<td>The <code>id</code> of the assignment project belongs to</td>
+</tr>
+<tr>
+<td><code>project_id</code></td>
+<td>The <code>id</code> of the the project you wish to grade</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">The assignment can only be graded by group mentor</aside>
+<h3 id='possible-exceptions'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to grade the assignment</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the assignment identified by <code>assignment_id</code> does not exists.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>When created grade has validation errors</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/api/v1/assignments/:assignment_id/projects/:project_id/grade</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"remarks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the remark.."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">CREATED</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grade"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"remarks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the remark.."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-11T04:02:44.466Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-11T04:02:44.466Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='update-grade'>UPDATE Grade</h2>
+<p>You can update grade identified by <code>:id</code> in <code>/api/v1/grades/:id</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the grade to be updated</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">The grade can only be updated by group mentor</aside>
+<h3 id='possible-exceptions-2'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to update grade for the assignment</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the grade identified by <code>id</code> does not exists.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>When updated grade has validation errors</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">POST</span> <span class="nn">/api/v1/assignments/:assignment_id/projects/:project_id/grade</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"remarks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the updated remark.."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">202</span> <span class="ne">ACCEPTED</span>
+</code></pre>
+<blockquote>
+<p>JSON response example:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"grade"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"grade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"remarks"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is the updated remark.."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-11T04:02:44.466Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-11T04:02:44.466Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='delete-grade'>DELETE Grade</h2>
+<p>Group mentor can DELETE a grade (identified by <code>:id</code>) in <code>/api/v1/grades/:id/</code>. Authentication <code>token</code> is passed through <code>Authorization</code> header and is <strong>required</strong>.</p>
+<h3 id='url-parameters-3'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>The <code>id</code> of the grade to be deleted</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">User with mentor or admin access can only delete the grades</aside>
+<h3 id='possible-exceptions-3'>Possible exceptions</h3>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>401</td>
+<td>When user is not authenticated i.e invalid or corrupt <code>token</code>.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>When non-mentor user tries to delete the grade</td>
+</tr>
+<tr>
+<td>404</td>
+<td>When the requested grade identified by <code>id</code> does not exists.</td>
+</tr>
+</tbody></table>
+<pre class="highlight http tab-http"><code><span class="nf">DELETE</span> <span class="nn">/api/v1/grades/:id</span> <span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="p">:</span> <span class="s">application/json</span>
+<span class="na">Authorization</span><span class="p">:</span> <span class="s">Token {token}</span>
+<span class="na">Host</span><span class="p">:</span> <span class="s">localhost</span>
+</code></pre><pre class="highlight http tab-http"><code><span class="k">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
+<span class="na">Content-Type</span><span class="p">:</span> <span class="s">application/json</span>
+</code></pre>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
